@@ -229,16 +229,25 @@
         }
         .result-copy { grid-area:copy; min-width:0; }
         .result-foot { grid-area:foot; }
-        .dashboard-visual {
+        .visual-col {
             grid-area:visual;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:8px;
+        }
+        .dashboard-visual {
             position:relative;
             width:116px;
             height:116px;
-            justify-self:end;
             border-radius:50%;
             background:radial-gradient(circle at 50% 45%, rgba(255,255,255,.045), rgba(255,255,255,.015) 58%, transparent 60%);
             border:1px solid rgba(255,255,255,.09);
             box-shadow:inset 0 0 0 8px rgba(255,255,255,.018), inset 0 10px 28px rgba(0,0,0,.24);
+        }
+        .dash-caption {
+            font-size:10px; color:#a3b2c4; text-transform:uppercase; letter-spacing:.1em;
+            text-align:center;
         }
         .dashboard-visual::after {
             content:"";
@@ -270,7 +279,6 @@
             line-height:1;
         }
         .dash-center strong { font-size:21px; letter-spacing:-.05em; color:#fff; }
-        .dash-center span { margin-top:4px; font-size:7px; color:#8fa0b4; text-transform:uppercase; letter-spacing:.12em; }
 
         /* clock */
         .clock-widget { --base-angle:0deg; --new-angle:0deg; }
@@ -447,14 +455,6 @@
   text-shadow:0 1px 8px rgba(0,0,0,.28);
   white-space:nowrap;
 }
-.dash-center span{
-  display:block;
-  margin:0;
-  line-height:1.15;
-  font-size:6.5px;
-  white-space:nowrap;
-  color:#a5b2c2;
-}
 .dash-kicker{
   bottom:8px;
   z-index:12;
@@ -514,7 +514,7 @@
   .clock-hand.next{ height:24px; }
   .dash-center{ width:64px; top:47%; }
   .dash-center strong{ font-size:19px; }
-  .dash-center span{ font-size:5.5px; }
+  .dash-caption{ font-size:9px; }
   .dash-kicker{ bottom:6px; font-size:5.2px; }
   .clock-legend{ bottom:18px; font-size:5px; }
   .fuel-empty,.fuel-full{ bottom:22px; font-size:5px; }
@@ -572,7 +572,6 @@
 }
 
 /* v13: legibility floor, contrast, mobile nav, glossary — critique fixes */
-.dash-center span{ font-size:10px; color:#a3b2c4; }
 .clock-legend{ font-size:9px; gap:8px; padding:3px 6px; }
 .fuel-empty,.fuel-full{ font-size:9px; color:#96a6ba; }
 .dash-range{ font-size:9px; padding:3px 6px; }
@@ -608,7 +607,7 @@ dfn{ font-style:normal; border-bottom:1px dotted currentColor; cursor:help; }
   .nav .cta{ margin-top:6px; text-align:center; }
 }
 @media (max-width:560px){
-  .dash-center span{ font-size:9px; }
+  .dash-caption{ font-size:8.5px; }
   .clock-legend{ font-size:8px; }
   .fuel-empty,.fuel-full{ font-size:8px; }
   .dash-range{ font-size:8px; }
@@ -757,14 +756,17 @@ dfn{ font-style:normal; border-bottom:1px dotted currentColor; cursor:help; }
                                     <div class="result-detail" id="resTimeDetails">De 60.0 min (v₁) para 50.0 min (v₂).</div>
                                 </div>
                                 <div class="result-foot"><strong>Ritmo:</strong> <span id="resPace1" class="cyan-txt">0.60 min/km</span> vs <span id="resPace2" class="rose-txt">0.50 min/km</span></div>
-                                <div class="dashboard-visual clock-widget" id="clockWidget" aria-label="Relógio comparando o tempo de viagem base e acelerado">
-                                    <div class="clock-mark"></div>
-                                    <div class="clock-legend"><b class="base">base</b><b class="next">acelerado</b></div>
-                                    <div class="dash-range adaptive-max" id="clockRange">60 min</div>
-                                    <div class="clock-hand base"></div>
-                                    <div class="clock-hand next"></div>
-                                    <div class="clock-center"></div>
-                                    <div class="dash-center"><strong id="clockDigital">50m</strong><span>tempo total</span></div>
+                                <div class="visual-col">
+                                    <div class="dashboard-visual clock-widget" id="clockWidget" aria-label="Relógio comparando o tempo de viagem base e acelerado">
+                                        <div class="clock-mark"></div>
+                                        <div class="clock-legend"><b class="base">base</b><b class="next">acelerado</b></div>
+                                        <div class="dash-range adaptive-max" id="clockRange">60 min</div>
+                                        <div class="clock-hand base"></div>
+                                        <div class="clock-hand next"></div>
+                                        <div class="clock-center"></div>
+                                        <div class="dash-center"><strong id="clockDigital">50m</strong></div>
+                                    </div>
+                                    <div class="dash-caption">tempo total</div>
                                 </div>
                             </article>
                             <article class="result">
@@ -774,14 +776,17 @@ dfn{ font-style:normal; border-bottom:1px dotted currentColor; cursor:help; }
                                     <div class="result-detail" id="resFuelDetails">Custo adicional modelado pelo arrasto aerodinâmico.</div>
                                 </div>
                                 <div class="result-foot"><strong>Estimativa:</strong> <span id="resFuelTotal" class="gold-txt">10.0 L/100km</span><span class="equals">=</span><span id="resFuelKmL" class="kmpl">10,0 km/L</span></div>
-                                <div class="dashboard-visual fuel-widget" id="fuelWidget" aria-label="Indicador visual do consumo estimado">
-                                    <div class="fuel-ring"></div>
-                                    <div class="fuel-pump">⛽</div>
-                                    <div class="dash-range adaptive-max" id="fuelRange">50 L/100 km</div>
-                                    <div class="fuel-needle"></div>
-                                    <div class="fuel-hub"></div>
-                                    <span class="fuel-empty">0L</span><span class="fuel-full adaptive-max" id="fuelMaxLabel">50L</span>
-                                    <div class="dash-center"><strong id="fuelDigital">10.0</strong><span>L / 100 km</span></div>
+                                <div class="visual-col">
+                                    <div class="dashboard-visual fuel-widget" id="fuelWidget" aria-label="Indicador visual do consumo estimado">
+                                        <div class="fuel-ring"></div>
+                                        <div class="fuel-pump">⛽</div>
+                                        <div class="dash-range adaptive-max" id="fuelRange">50 L/100 km</div>
+                                        <div class="fuel-needle"></div>
+                                        <div class="fuel-hub"></div>
+                                        <span class="fuel-empty">0L</span><span class="fuel-full adaptive-max" id="fuelMaxLabel">50L</span>
+                                        <div class="dash-center"><strong id="fuelDigital">10.0</strong></div>
+                                    </div>
+                                    <div class="dash-caption">L / 100 km</div>
                                 </div>
                             </article>
                             <article class="result">
@@ -791,13 +796,16 @@ dfn{ font-style:normal; border-bottom:1px dotted currentColor; cursor:help; }
                                     <div class="result-detail">Energia adicional no impacto (Eₖ = ½ mv²).</div>
                                 </div>
                                 <div class="result-foot"><strong>Frenagem:</strong> <span id="resBrakeLabel">cerca de 44% mais espaço no asfalto.</span></div>
-                                <div class="dashboard-visual energy-widget" id="energyWidget" aria-label="Indicador visual da energia cinética relativa">
-                                    <div class="energy-arc"></div>
-                                    <div class="energy-ticks"></div>
-                                    <div class="dash-range adaptive-max" id="energyRange">2×</div>
-                                    <div class="energy-needle"></div>
-                                    <div class="energy-hub"></div>
-                                    <div class="dash-center"><strong id="energyDigital">1.44×</strong><span>energia relativa</span></div>
+                                <div class="visual-col">
+                                    <div class="dashboard-visual energy-widget" id="energyWidget" aria-label="Indicador visual da energia cinética relativa">
+                                        <div class="energy-arc"></div>
+                                        <div class="energy-ticks"></div>
+                                        <div class="dash-range adaptive-max" id="energyRange">2×</div>
+                                        <div class="energy-needle"></div>
+                                        <div class="energy-hub"></div>
+                                        <div class="dash-center"><strong id="energyDigital">1.44×</strong></div>
+                                    </div>
+                                    <div class="dash-caption">energia relativa</div>
                                 </div>
                             </article>
                             <article class="result">
@@ -807,12 +815,15 @@ dfn{ font-style:normal; border-bottom:1px dotted currentColor; cursor:help; }
                                     <div class="result-detail">Baseado no Modelo de Potência de Elvik (v⁴).</div>
                                 </div>
                                 <div class="result-foot"><strong>Leitura:</strong> o aumento de velocidade amplifica desproporcionalmente o risco modelado.</div>
-                                <div class="dashboard-visual risk-widget" id="riskWidget" aria-label="Indicador visual do multiplicador de risco modelado">
-                                    <div class="risk-arc"></div>
-                                    <div class="dash-range adaptive-max" id="riskRange">2×</div>
-                                    <div class="risk-needle"></div>
-                                    <div class="risk-hub"></div>
-                                    <div class="dash-center"><strong id="riskDigital">1.44×</strong><span>fator relativo</span></div>
+                                <div class="visual-col">
+                                    <div class="dashboard-visual risk-widget" id="riskWidget" aria-label="Indicador visual do multiplicador de risco modelado">
+                                        <div class="risk-arc"></div>
+                                        <div class="dash-range adaptive-max" id="riskRange">2×</div>
+                                        <div class="risk-needle"></div>
+                                        <div class="risk-hub"></div>
+                                        <div class="dash-center"><strong id="riskDigital">1.44×</strong></div>
+                                    </div>
+                                    <div class="dash-caption">fator relativo</div>
                                 </div>
                             </article>
                         </div>
